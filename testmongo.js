@@ -1,4 +1,5 @@
 const { MongoClient } = require("mongodb");
+const fs = require('fs'); 
 
 // The uri string must be the connection string for the database (obtained on Atlas).
 const uri = "mongodb+srv://newUser:thisuser@alyssamajor.enfizge.mongodb.net/?retryWrites=true&w=majority&appName=alyssamajor";
@@ -17,16 +18,40 @@ app.use(express.urlencoded({ extended: true }));
 
 // Default route:
 app.get('/', function(req, res) {
-  const myquery = req.query;
-  var outstring = 'Starting... ';
-  res.send(outstring);
+  fs.readFile("/workspaces/MongoRender/index.html", (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        res.status(500).send("Error reading HTML file");
+        return;
+    }
+    res.setHeader('Content-Type', 'text/html');
+    res.send(data);
+});
+});
+
+ 
+  
+app.get('/register', function(req,res){
+  fs.readFile("/workspaces/MongoRender/userCreate.html", (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        res.status(500).send("Error reading HTML file");
+        return;
+    }
+    res.setHeader('Content-Type', 'text/html');
+    res.send(data);
+});
 });
 
 app.get('/say/:name', function(req, res) {
   res.send('Hello ' + req.params.name + '!');
 });
 
-
+app.get('/goDo' , function(req,res){
+  const myquery = req.query;
+  var outstring = 'Starting... ';
+  res.send(outstring);
+});
 // Route to access database:
 app.get('/api/mongo/:item', function(req, res) {
 const client = new MongoClient(uri);
