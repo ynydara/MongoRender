@@ -68,40 +68,29 @@ app.get('/findUser' , function(req,res){
 app.get('/findUserRender' , function(req,res){
   const client = new MongoClient(uri);
   const { UserName, Password } = req.query;
- 
-  const formData = {
-    UserName,
-    Password
-};
 
-  const searchKey = "{ name: '" + UserName + "' }";
-  console.log("Looking for: " + searchKey);
   async function run() {
     try {
       const database = client.db('databaseforalyssa');
-      const parts = database.collection('collectionforalyssa');
-      const query = { name: UserName };
-
+      // const parts = database.collection('collectionforalyssa');
+      const parts = database.collection('loginCredentials');
+      const query = { User_Id: UserName, Password: Password};
     const part = await parts.findOne(query);
     console.log(part);
-    
+
     if (part == null) {
-      // Respond with a message indicating the user was not found
       res.send('User not found.');
   } else {
-      // Respond with details of the found user
       res.send('Found this user: ' + JSON.stringify(part));
   }
 
   } finally {
-    // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
 run().catch(console.dir);
 });
 
-  // console.log("Form Data:", formData);
 
 // Route to access database:
 app.get('/api/mongo/:item', function(req, res) {
