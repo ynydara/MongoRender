@@ -84,7 +84,14 @@ app.get('/findUserRender' , function(req,res){
 
     const part = await parts.findOne(query);
     console.log(part);
-    res.send('Found this: ' + JSON.stringify(part));  //Use stringify to print a json
+    
+    if (part == null) {
+      // Respond with a message indicating the user was not found
+      res.send('User not found.');
+  } else {
+      // Respond with details of the found user
+      res.send('Found this user: ' + JSON.stringify(part));
+  }
 
   } finally {
     // Ensures that the client will close when you finish/error
