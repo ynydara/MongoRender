@@ -63,11 +63,39 @@ app.get('/findUser' , function(req,res){
     res.send(data);
 });
 });
-app.get('/findUser' , function(req,res){
-  const myquery = req.query;
-  var outstring = 'Starting... ';
-  res.send(outstring);
+
+
+app.get('/findUserRender' , function(req,res){
+  const client = new MongoClient(uri);
+  const { UserName, Password } = req.query;
+ 
+  const formData = {
+    UserName,
+    Password
+};
+
+  const searchKey = "{ name: '" + UserName + "' }";
+  console.log("Looking for: " + searchKey);
+  async function run() {
+    try {
+      const database = client.db('databaseforalyssa');
+      const parts = database.collection('collectionforalyssa');
+      const query = { name: UserName };
+
+    const part = await parts.findOne(query);
+    console.log(part);
+    res.send('Found this: ' + JSON.stringify(part));  //Use stringify to print a json
+
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 });
+
+  // console.log("Form Data:", formData);
+
 // Route to access database:
 app.get('/api/mongo/:item', function(req, res) {
 const client = new MongoClient(uri);
