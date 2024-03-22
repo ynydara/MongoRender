@@ -52,6 +52,22 @@ app.get('/goDo' , function(req,res){
   var outstring = 'Starting... ';
   res.send(outstring);
 });
+app.get('/findUser' , function(req,res){
+  fs.readFile("/workspaces/MongoRender/findUser.html", (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        res.status(500).send("Error reading HTML file");
+        return;
+    }
+    res.setHeader('Content-Type', 'text/html');
+    res.send(data);
+});
+});
+app.get('/findUser' , function(req,res){
+  const myquery = req.query;
+  var outstring = 'Starting... ';
+  res.send(outstring);
+});
 // Route to access database:
 app.get('/api/mongo/:item', function(req, res) {
 const client = new MongoClient(uri);
