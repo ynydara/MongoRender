@@ -43,6 +43,25 @@ app.get('/register', function(req,res){
 });
 });
 
+
+app.post('/createUser', async function(req, res){
+  const client = new MongoClient(uri);
+  const { UserId, Password } = req.body;
+  console.log(UserId + Password);
+  try {
+    const database = client.db('databaseforalyssa');
+    const collection = database.collection('loginCredentials');
+
+    const newUser = {UserId: UserId, Password: Password};
+    const doit = await collection.insertOne(newUser);
+    console.log(doit);
+    res.send('Got this:' + JSON.stringify(doit));
+} catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error creating user");
+}
+});
+
 app.get('/say/:name', function(req, res) {
   res.send('Hello ' + req.params.name + '!');
 });
@@ -73,15 +92,15 @@ app.get('/findUserRender' , function(req,res){
     try {
       const database = client.db('databaseforalyssa');
       // const parts = database.collection('collectionforalyssa');
-      const parts = database.collection('loginCredentials');
+      const collection = database.collection('loginCredentials');
       const query = { User_Id: UserName, Password: Password};
-    const part = await parts.findOne(query);
-    console.log(part);
+    const output = await collection.findOne(query);
+    console.log(output);
 
-    if (part == null) {
+    if (output== null) {
       res.send('User not found.');
   } else {
-      res.send('Found this user: ' + JSON.stringify(part));
+      res.send('Found this user: ' + JSON.stringify(output));
   }
 
   } finally {
@@ -101,14 +120,14 @@ console.log("Looking for: " + searchKey);
 async function run() {
   try {
     const database = client.db('databaseforalyssa');
-    const parts = database.collection('collectionforalyssa');
+    const collection = database.collection('collectionforalyssa');
 
     // Hardwired Query for a part that has partID '12345'
     // const query = { partID: '12345' };
     // But we will use the parameter provided with the route
     const query = { name: req.params.item };
 
-    const part = await parts.findOne(query);
+    const part = await collection.findOne(query);
     console.log(part);
     res.send('Found this: ' + JSON.stringify(part));  //Use stringify to print a json
 
