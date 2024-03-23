@@ -1,12 +1,13 @@
 const { MongoClient } = require("mongodb");
 const fs = require('fs'); 
-
+var cookieParser = require('cookie-parser')
 // The uri string must be the connection string for the database (obtained on Atlas).
 const uri = "mongodb+srv://newUser:thisuser@alyssamajor.enfizge.mongodb.net/?retryWrites=true&w=majority&appName=alyssamajor";
 
 // --- This is the standard stuff to get it to work on the browser
 const express = require('express');
 const app = express();
+app.use(cookieParser());
 const port = 3000;
 app.listen(port);
 console.log('Server started at http://localhost:' + port);
@@ -41,6 +42,23 @@ app.get('/register', function(req,res){
     res.setHeader('Content-Type', 'text/html');
     res.send(data);
 });
+});
+
+app.get('/showcookie', function (req, res) {
+  mycookies=req.cookies;
+  res.send(mycookies); 
+});
+
+app.get('/report', function (req, res) {
+  // Cookies that have not been signed
+  console.log('Cookies: ', req.cookies);
+
+  // Cookies that have been signed
+  console.log('Signed Cookies: ', req.signedCookies);
+
+  //Send the cookies report to the browser
+  mycookies=req.cookies;
+  res.send(JSON.stringify(mycookies) + " --Done reporting");
 });
 
 
@@ -100,7 +118,18 @@ app.get('/findUserRender' , function(req,res){
     if (output== null) {
       res.send('User not found.');
   } else {
-      res.send('Found this user: ' + JSON.stringify(output));
+    res.cookie('cook2', 'xyz', {maxAge : 20000});
+    // res.send('Found this user: ' + JSON.stringify(output));
+    fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data) => {
+      if (err) {
+          console.error("Error reading file:", err);
+          res.status(500).send("Error reading HTML file");
+          return;
+      }
+      res.setHeader('Content-Type', 'text/html');
+      // res.send(data);
+      res.send('Found this user: ' + JSON.stringify(output) + '<br><br>' + data);
+  });
   }
 
   } finally {
