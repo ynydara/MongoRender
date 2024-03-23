@@ -152,7 +152,16 @@ app.get('/findUserRender' , function(req,res){
     console.log(output);
 
     if (output== null) {
-      res.send('User not found. <a href="/">Go to home page</a>');
+      fs.readFile("cookieOnDuty.html", (err,data)=>{
+        if (err) {
+          console.error("Error reading file:", err);
+          res.status(500).send("Error reading cookieOnDuty.html");
+          return;
+      }
+      res.setHeader('Content-Type', 'text/html');
+      res.send('User not found. <a href="/">Go to home page</a>' + data);
+      } )
+     
       
   } else {
     res.cookie('cook2', 'xyz', {maxAge : 20000});
