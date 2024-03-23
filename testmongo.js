@@ -25,8 +25,18 @@ app.get('/', function(req, res) {
         res.status(500).send("Error reading HTML file");
         return;
     }
-    res.setHeader('Content-Type', 'text/html');
-    res.send(data);
+    // res.setHeader('Content-Type', 'text/html');
+    var dataShown = data;
+    fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data2) => {
+      if(err){
+        console.error("Error reading file:", err);
+        res.status(500).send("Error reading HTML file");
+        return;
+      }
+      res.setHeader('Content-Type', 'text/html');
+      dataShown += data2;
+      res.send(dataShown);
+    });
 });
 });
 
