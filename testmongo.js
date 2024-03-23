@@ -18,7 +18,16 @@ app.use(express.urlencoded({ extended: true }));
 // routes will go here
 
 // Default route:
-app.get('/', function(req, res) {
+app.get('/', function (req, res){
+  if (Object.keys(req.cookies).length > 0){
+    res.redirect('/showCookie');
+  }
+  else{
+    res.redirect('/findUser');
+  }
+
+});
+app.get('/index', function(req, res) {
   fs.readFile("/workspaces/MongoRender/index.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
