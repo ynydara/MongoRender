@@ -53,6 +53,13 @@ app.get('/register', function(req,res){
     res.send(data);
 });
 });
+app.get('/clearCookies', function (req,res){
+    const cookies = Object.keys(req.cookies);
+    cookies.forEach(cookie => {
+        res.clearCookie(cookie); 
+    });
+    res.send('All cookies deleted');
+});
 
 app.get('/showcookie', function (req, res) {
   mycookies=req.cookies;
@@ -121,7 +128,7 @@ app.get('/findUserRender' , function(req,res){
       const database = client.db('databaseforalyssa');
       // const parts = database.collection('collectionforalyssa');
       const collection = database.collection('loginCredentials');
-      const query = { User_Id: UserName, Password: Password};
+      const query = { UserId: UserName, Password: Password};
     const output = await collection.findOne(query);
     console.log(output);
 
