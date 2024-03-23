@@ -28,7 +28,7 @@ app.get('/', function (req, res){
 
 });
 app.get('/index', function(req, res) {
-  fs.readFile("/workspaces/MongoRender/index.html", (err, data) => {
+  fs.readFile("index.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
         res.status(500).send("Error reading index.html");
@@ -36,7 +36,7 @@ app.get('/index', function(req, res) {
     }
     // res.setHeader('Content-Type', 'text/html');
     var dataShown = data;
-    fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data2) => {
+    fs.readFile("cookieOnDuty.html", (err, data2) => {
       if(err){
         console.error("Error reading file:", err);
         res.status(500).send("Error reading cookieOnDuty.html");
@@ -52,7 +52,7 @@ app.get('/index', function(req, res) {
  
   
 app.get('/register', function(req,res){
-  fs.readFile("/workspaces/MongoRender/userCreate.html", (err, data) => {
+  fs.readFile("userCreate.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
         res.status(500).send("Error reading userCreate.html");
@@ -84,7 +84,7 @@ app.get('/report', function (req, res) {
 
   //Send the cookies report to the browser
   mycookies=req.cookies;
-  fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data) => {
+  fs.readFile("cookieOnDuty.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
         res.status(500).send("Error reading cookieOnDuty.html");
@@ -126,7 +126,7 @@ app.get('/goDo' , function(req,res){
   res.send(outstring);
 });
 app.get('/findUser' , function(req,res){
-  fs.readFile("/workspaces/MongoRender/findUser.html", (err, data) => {
+  fs.readFile("findUser.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
         res.status(500).send("Error reading findUser.html");
@@ -156,7 +156,7 @@ app.get('/findUserRender' , function(req,res){
   } else {
     res.cookie('cook2', 'xyz', {maxAge : 20000});
     // res.send('Found this user: ' + JSON.stringify(output));
-    fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data) => {
+    fs.readFile("cookieOnDuty.html", (err, data) => {
       if (err) {
           console.error("Error reading file:", err);
           res.status(500).send("Error reading cookieOnDuty.html");
