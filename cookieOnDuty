@@ -1,0 +1,12 @@
+<html>
+<body><p>Cookie:</p>
+
+    <form action="./report" method="GET">
+        <input type="submit" value="Cookie Report">
+    </form>
+
+    <form action="./showcookie" method="GET">
+        <input type="submit" value="Show Cookie">
+    </form>
+
+</body>
