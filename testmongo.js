@@ -31,7 +31,7 @@ app.get('/index', function(req, res) {
   fs.readFile("/workspaces/MongoRender/index.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
-        res.status(500).send("Error reading HTML file");
+        res.status(500).send("Error reading index.html");
         return;
     }
     // res.setHeader('Content-Type', 'text/html');
@@ -39,7 +39,7 @@ app.get('/index', function(req, res) {
     fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data2) => {
       if(err){
         console.error("Error reading file:", err);
-        res.status(500).send("Error reading HTML file");
+        res.status(500).send("Error reading cookieOnDuty.html");
         return;
       }
       res.setHeader('Content-Type', 'text/html');
@@ -55,7 +55,7 @@ app.get('/register', function(req,res){
   fs.readFile("/workspaces/MongoRender/userCreate.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
-        res.status(500).send("Error reading HTML file");
+        res.status(500).send("Error reading userCreate.html");
         return;
     }
     res.setHeader('Content-Type', 'text/html');
@@ -87,7 +87,7 @@ app.get('/report', function (req, res) {
   fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
-        res.status(500).send("Error reading HTML file");
+        res.status(500).send("Error reading cookieOnDuty.html");
         return;
     }
     res.setHeader('Content-Type', 'text/html');
@@ -129,7 +129,7 @@ app.get('/findUser' , function(req,res){
   fs.readFile("/workspaces/MongoRender/findUser.html", (err, data) => {
     if (err) {
         console.error("Error reading file:", err);
-        res.status(500).send("Error reading HTML file");
+        res.status(500).send("Error reading findUser.html");
         return;
     }
     res.setHeader('Content-Type', 'text/html');
@@ -159,7 +159,7 @@ app.get('/findUserRender' , function(req,res){
     fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data) => {
       if (err) {
           console.error("Error reading file:", err);
-          res.status(500).send("Error reading HTML file");
+          res.status(500).send("Error reading cookieOnDuty.html");
           return;
       }
       res.setHeader('Content-Type', 'text/html');
