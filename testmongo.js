@@ -67,7 +67,15 @@ app.get('/clearCookies', function (req,res){
     cookies.forEach(cookie => {
         res.clearCookie(cookie); 
     });
-    res.send('All cookies deleted');
+    fs.readFile("cookieOnDuty.html", (err, data2) => {
+      if(err){
+        console.error("Error reading file:", err);
+        res.status(500).send("Error reading cookieOnDuty.html");
+        return;
+      }
+      res.send('All cookies deleted' + data2); 
+    });
+    
 });
 
 app.get('/showcookie', function (req, res) {
