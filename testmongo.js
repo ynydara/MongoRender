@@ -20,10 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 // Default route:
 app.get('/', function (req, res){
   if (Object.keys(req.cookies).length > 0){
-    res.redirect('/showCookie');
+    res.redirect('/report');
   }
   else{
-    res.redirect('/findUser');
+    res.redirect('/index');
   }
 
 });
@@ -84,7 +84,17 @@ app.get('/report', function (req, res) {
 
   //Send the cookies report to the browser
   mycookies=req.cookies;
-  res.send(JSON.stringify(mycookies) + " --Done reporting");
+  fs.readFile("/workspaces/MongoRender/cookieOnDuty.html", (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        res.status(500).send("Error reading HTML file");
+        return;
+    }
+    res.setHeader('Content-Type', 'text/html');
+    // res.send(data);
+    res.send(JSON.stringify(mycookies)+data);
+});
+  // res.send(JSON.stringify(mycookies) + " --Done reporting");
 });
 
 
