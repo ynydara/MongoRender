@@ -152,7 +152,8 @@ app.get('/findUserRender' , function(req,res){
     console.log(output);
 
     if (output== null) {
-      res.send('User not found.');
+      res.send('User not found. <a href="/">Go to home page</a>');
+      
   } else {
     res.cookie('cook2', 'xyz', {maxAge : 20000});
     // res.send('Found this user: ' + JSON.stringify(output));
