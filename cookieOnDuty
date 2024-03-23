@@ -9,4 +9,9 @@
         <input type="submit" value="Show Cookie">
     </form>
 
+    <form action="./clearCookies" method="GET">
+        <input type="submit" value="Clear Cookies">
+    </form>
+    
+
 </body>
